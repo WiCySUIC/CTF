@@ -310,7 +310,7 @@ const teamMembers = [
     },
     {
         realName: "Ciara Taylor",
-        specialty: "Outreach Lead | Communications member",
+        specialty: "Outreach Lead | Communications Member",
         status: "Wanted",
         image: "teamPhotos/ciara.JPG",
         threatLevel: 3,
