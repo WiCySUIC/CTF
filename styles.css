@@ -1131,12 +1131,11 @@ a.team-member {
     }
 }
 
-
-/* Footer */
 footer {
     background: linear-gradient(to top, rgba(163, 29, 29,0.8), black);
     background-color: #062337;
     display: flex;
+    justify-content: center;
     align-items: center;
     margin-top: auto;
     padding: 30px;
@@ -1148,8 +1147,6 @@ footer {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
-    max-width: 1200px;
-    padding: 0 20px;
 }
 
 .flame-text {
