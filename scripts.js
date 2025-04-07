@@ -426,25 +426,95 @@ function applyRedBlueGlitch(card, e) {
 }
 
 //table view layout with 4 columns and increased spacing
+// function loadTeamTable() {
+//     const teamContainer = document.getElementById("teamGrid");
+//     teamContainer.innerHTML = "";
+//     teamContainer.className = "team-table";
+
+//     //create table structure
+//     const table = document.createElement("table");
+//     let currentRow;
+    
+//     teamMembers.forEach((member, index) => {
+//         //create a new row for every 4 members
+//         if (index % 4 === 0) {
+//             currentRow = document.createElement("tr");
+//             table.appendChild(currentRow);
+//         }
+        
+//         const cell = document.createElement("td");
+//         cell.classList.add("team-member-cell");
+        
+//         const isLinked = !!member.linkedin;
+//         const memberCard = document.createElement(isLinked ? "a" : "div");
+//         memberCard.classList.add("team-member");
+
+//         if (isLinked) {
+//             memberCard.href = member.linkedin;
+//             memberCard.target = "_blank";
+//             memberCard.rel = "noopener noreferrer";
+//         }
+        
+//         if (member.status === "CAPTURED") {
+//             memberCard.classList.add("captured");
+//         }
+        
+//         let threatFlames = "🔥".repeat(member.threatLevel || 3);
+        
+//         memberCard.innerHTML = `
+//             <div class="status ${member.status === "CAPTURED" ? "captured" : ""}">${member.status}</div>
+//             <img src="${member.image}" alt="${member.realName}">
+//             <div class="hacker-info">
+//                 <div class="glitch-data real-name">${member.realName}</div>
+//                 <div class="glitch-data specialty">${member.specialty}</div>
+//                 <div class="threat-level">${threatFlames}</div>
+//             </div>
+//         `;
+        
+//         memberCard.addEventListener("mousemove", function(e) {
+//             applyRedBlueGlitch(this, e);
+//         });
+        
+//         //effect on click
+//         memberCard.addEventListener("click", function() {
+//             this.style.filter = "invert(100%)";
+//             setTimeout(() => {
+//                 this.style.filter = "invert(0%)";
+//             }, 150);
+//         });
+        
+//         //Reset mouse
+//         memberCard.addEventListener("mouseleave", function() {
+//             this.style.textShadow = '';
+//             this.style.boxShadow = '';
+//             const textElements = this.querySelectorAll('.glitch-data');
+//             textElements.forEach(element => {
+//                 element.style.textShadow = '';
+//                 element.style.transform = 'translate(0, 0)';
+//                 //Reset text
+//                 if (element.dataset.originalText) {
+//                     element.textContent = element.dataset.originalText;
+//                 }
+//             });
+//         });
+        
+//         cell.appendChild(memberCard);
+//         currentRow.appendChild(cell);
+//     });
+    
+//     teamContainer.appendChild(table);
+// }
+
 function loadTeamTable() {
     const teamContainer = document.getElementById("teamGrid");
     teamContainer.innerHTML = "";
-    teamContainer.className = "team-table";
+    teamContainer.className = "team-grid"; // still works, just changes layout
 
-    //create table structure
-    const table = document.createElement("table");
-    let currentRow;
-    
-    teamMembers.forEach((member, index) => {
-        //create a new row for every 4 members
-        if (index % 4 === 0) {
-            currentRow = document.createElement("tr");
-            table.appendChild(currentRow);
-        }
-        
-        const cell = document.createElement("td");
-        cell.classList.add("team-member-cell");
-        
+    // Create a new div to act as a grid wrapper
+    const gridInner = document.createElement("div");
+    gridInner.classList.add("team-grid-inner");
+
+    teamMembers.forEach((member) => {
         const isLinked = !!member.linkedin;
         const memberCard = document.createElement(isLinked ? "a" : "div");
         memberCard.classList.add("team-member");
@@ -454,56 +524,55 @@ function loadTeamTable() {
             memberCard.target = "_blank";
             memberCard.rel = "noopener noreferrer";
         }
-        
+
         if (member.status === "CAPTURED") {
             memberCard.classList.add("captured");
         }
-        
+
         let threatFlames = "🔥".repeat(member.threatLevel || 3);
-        
+
         memberCard.innerHTML = `
             <div class="status ${member.status === "CAPTURED" ? "captured" : ""}">${member.status}</div>
             <img src="${member.image}" alt="${member.realName}">
             <div class="hacker-info">
-                <div class="glitch-data real-name">${member.realName}</div>
-                <div class="glitch-data specialty">${member.specialty}</div>
+                <div class="info-text">
+                    <div class="glitch-data real-name">${member.realName}</div>
+                    <div class="glitch-data specialty">${member.specialty}</div>
+                </div>
                 <div class="threat-level">${threatFlames}</div>
             </div>
         `;
-        
-        memberCard.addEventListener("mousemove", function(e) {
+
+        memberCard.addEventListener("mousemove", function (e) {
             applyRedBlueGlitch(this, e);
         });
-        
-        //effect on click
-        memberCard.addEventListener("click", function() {
+
+        memberCard.addEventListener("click", function () {
             this.style.filter = "invert(100%)";
             setTimeout(() => {
                 this.style.filter = "invert(0%)";
             }, 150);
         });
-        
-        //Reset mouse
-        memberCard.addEventListener("mouseleave", function() {
-            this.style.textShadow = '';
-            this.style.boxShadow = '';
-            const textElements = this.querySelectorAll('.glitch-data');
-            textElements.forEach(element => {
-                element.style.textShadow = '';
-                element.style.transform = 'translate(0, 0)';
-                //Reset text
+
+        memberCard.addEventListener("mouseleave", function () {
+            this.style.textShadow = "";
+            this.style.boxShadow = "";
+            const textElements = this.querySelectorAll(".glitch-data");
+            textElements.forEach((element) => {
+                element.style.textShadow = "";
+                element.style.transform = "translate(0, 0)";
                 if (element.dataset.originalText) {
                     element.textContent = element.dataset.originalText;
                 }
             });
         });
-        
-        cell.appendChild(memberCard);
-        currentRow.appendChild(cell);
+
+        gridInner.appendChild(memberCard);
     });
-    
-    teamContainer.appendChild(table);
+
+    teamContainer.appendChild(gridInner);
 }
+
 
 // letter animation of about title
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
