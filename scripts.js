@@ -267,7 +267,7 @@ const teamMembers = [
         specialty: "Experience Lead | Logistics Co-Lead",
         status: "WANTED",
         image: "teamPhotos/coda.JPG",
-        threatLevel: 4,
+        threatLevel: 5,
         linkedin: "https://www.linkedin.com/in/coda-richmond"
     },
     {
