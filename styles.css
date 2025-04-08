@@ -540,9 +540,6 @@ FAQ SECTION GO HERE
 
 /* hover over questions */
 .faq-box:hover {
-    /* background-color: rgba(255, 255, 255, 0);
-    color: rgb(255, 69, 12); */
-    /* border: 0.2vw solid rgb(255, 69, 12); */
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(255, 77, 77, 0.8);
 }
@@ -641,6 +638,7 @@ FAQ SECTION GO HERE
         display: block;
     }
 }
+
 
 /* 
 

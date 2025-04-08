@@ -56,42 +56,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleFAQClick(e) {
         const item = e.currentTarget;
-        const answer = item.querySelector('.faq-answer');
         const isActive = item.classList.contains('active');
+        
 
-        // if already open, close everything
-        if (isActive) {
-            closeAllAnswers();
-            return;
-        }
-
-        // close all others
-        closeAllAnswers();
-
-        // open clicked answer
+        document.querySelectorAll('.faq-item').forEach(i => {
+            i.classList.remove('active');
+            i.style.marginTop = ''; //  margin reset manually applied
+        });
+        
+        if (isActive) return;
+        
         item.classList.add('active');
-
-        // this is calculating positioning
-        const itemRect = item.getBoundingClientRect(); /* this just returns the size of element and the position for vp */ 
-        const itemIndex = Array.from(faqItems).indexOf(item);
-        const rowIndex = Math.floor(itemIndex / itemsPerRow);
-
-        if (answer) {
+        
+        if (window.innerWidth > 768) {
+            const answer = item.querySelector('.faq-answer');
+            const itemRect = item.getBoundingClientRect();
+            const itemIndex = Array.from(faqItems).indexOf(item);
+            const rowIndex = Math.floor(itemIndex / itemsPerRow);
+        
+            if (answer) {
             const answerHeight = answer.offsetHeight;
             answer.style.top = `${itemRect.height}px`;
-
-            // THREE ITEMS in next row are moved 
+        
             const startNextRow = (rowIndex + 1) * itemsPerRow;
-
             for (let i = 0; i < itemsPerRow; i++) {
                 const nextItem = faqItems[startNextRow + i];
                 if (nextItem) {
-                    nextItem.style.marginTop = `${answerHeight + 20}px`; // extra padding for safety
+                nextItem.style.marginTop = `${answerHeight + 20}px`;
                 }
             }
+            }
         }
-    }
-
+        }
+      
     faqItems.forEach(item => {
         item.addEventListener('click', handleFAQClick);
     });
@@ -150,34 +147,34 @@ function resizeCanvas() {
 function pixelGlitchEffect(canvas, ctx, imagePair, callback) {
     let glitchImg = new Image();
     glitchImg.src = imagePair.glitch;
-    glitchImg.crossOrigin = "Anonymous"; // Prevent CORS issues
+    glitchImg.crossOrigin = "Anonymous"; // prevent CORS issues
 
     glitchImg.onload = () => {
-        let glitchSteps = 6; // Number of glitch transitions
+        let glitchSteps = 6; // number of glitch transitions
         let step = 0;
 
         function applyGlitch() {
             if (step >= glitchSteps) {
-                callback(imagePair.clean); // Show clean logo after glitching
+                callback(imagePair.clean); // show clean logo after glitching
                 return;
             }
 
-            // Clear canvas
+            // clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Apply pixelation with random distortion
+            //distortion
             let pixelSize = Math.floor(Math.random() * 10) + 2;
             ctx.drawImage(glitchImg, 0, 0, canvas.width / pixelSize, canvas.height / pixelSize);
             ctx.drawImage(canvas, 0, 0, canvas.width / pixelSize, canvas.height / pixelSize, 0, 0, canvas.width, canvas.height);
 
-            // Add random horizontal scan lines
+            //random horizontal scan lines
             for (let i = 0; i < 5; i++) {
                 let y = Math.random() * canvas.height;
                 ctx.fillStyle = "rgba(255, 0, 0, 0.2)";
                 ctx.fillRect(0, y, canvas.width, 2);
             }
 
-            // Add slight RGB shift effect
+            // add slight RGB shift effect
             ctx.globalCompositeOperation = "difference";
             ctx.drawImage(glitchImg, Math.random() * 10 - 5, Math.random() * 10 - 5, canvas.width, canvas.height);
             ctx.globalCompositeOperation = "source-over";
@@ -194,7 +191,7 @@ function pixelGlitchEffect(canvas, ctx, imagePair, callback) {
     };
 }
 
-// Display the official logo after glitch effect
+// display the official logo after glitch effect
 function displayOfficialLogo(canvas, ctx, officialImage) {
     let officialImg = new Image();
     officialImg.src = officialImage;
@@ -204,7 +201,7 @@ function displayOfficialLogo(canvas, ctx, officialImage) {
     };
 }
 
-// Apply glitch effect then show the final logo
+// apply glitch effect then show the final logo
 function glitchThenShow(canvas, ctx, imagePair) {
     pixelGlitchEffect(canvas, ctx, imagePair, (cleanLogo) => {
         setTimeout(() => {
@@ -213,12 +210,12 @@ function glitchThenShow(canvas, ctx, imagePair) {
     });
 }
 
-// Function to start glitching at **random intervals**
+// function to start glitching at **random intervals**
 function startRandomGlitchLoop(canvas, ctx, imagePair) {
     function glitchWithRandomDelay() {
         glitchThenShow(canvas, ctx, imagePair);
         
-        // Generate a new random interval between **8 to 15 seconds**
+        // generate a new random interval between **8 to 15 seconds**
         let randomDelay = Math.floor(Math.random() * (10000 - 5000) + 5000); 
         
         setTimeout(glitchWithRandomDelay, randomDelay);
@@ -227,7 +224,7 @@ function startRandomGlitchLoop(canvas, ctx, imagePair) {
     glitchWithRandomDelay(); // Start immediately
 }
 
-// Run glitches on all elements with random timing
+// run glitches on all elements with random timing
 function applyGlitchesWithRandomization() {
     startRandomGlitchLoop(mainSponsorCanvas, mainSponsorCtx, mainSponsor);
 
@@ -244,7 +241,7 @@ function applyGlitchesWithRandomization() {
     });
 }
 
-// Resize canvas and start random glitches
+// resize canvas and start random glitches
 window.addEventListener("load", () => {
     resizeCanvas();
     applyGlitchesWithRandomization();
@@ -275,12 +272,12 @@ const teamMembers = [
         specialty: "Communications Lead",
         status: "CAPTURED",
         image: "teamPhotos/julia.JPG",
-        threatLevel: 3,
+        threatLevel: 4,
         linkedin: "https://www.linkedin.com/in/juliafbowman"
     },
     {
         realName: "Martha Barraza",
-        specialty: "Web Design Co-Lead",
+        specialty: "Web Design Lead",
         status: "WANTED",
         image: "teamPhotos/martha.JPG",
         threatLevel: 4,
@@ -288,32 +285,25 @@ const teamMembers = [
     },
     {
         realName: "Eduardo Morales",
-        specialty: "Web Design Co-Lead | Experience Member",
+        specialty: "Experience Member | Web Development member",
         status: "CAPTURED",
         image: "teamPhotos/eddie.JPG",
-        threatLevel: 3
+        threatLevel: 4
     },
     {
         realName: "Monsserrat Berrum",
         specialty: "Logistics Co-Lead",
         status: "Wanted",
         image: "teamPhotos/monsse.JPG",
-        threatLevel: 3,
+        threatLevel: 4,
         linkedin: "https://www.linkedin.com/in/monsbe2509/"
-    },
-    {
-        realName: "Kevin Palma",
-        specialty: "Outreach Co-Lead | Experience Member",
-        status: "CAPTURED",
-        image: "teamPhotos/kevin.jpg",
-        threatLevel: 3
     },
     {
         realName: "Ciara Taylor",
         specialty: "Outreach Lead | Communications Member",
         status: "Wanted",
         image: "teamPhotos/ciara.JPG",
-        threatLevel: 3,
+        threatLevel: 4,
         linkedin: "http://linkedin.com/in/ciara-taylor-6a6620230"
     },
     {
@@ -326,10 +316,10 @@ const teamMembers = [
     },
     {
         realName: "Basil Tiongson",
-        specialty: "Web Design Member",
+        specialty: "Experience Member",
         status: "WANTED",
         image: "teamPhotos/basil.JPG",
-        threatLevel: 4
+        threatLevel: 3
     },
     {
         realName: "Jason Carmona",
@@ -355,6 +345,13 @@ const teamMembers = [
         threatLevel: 3,
         linkedin: "https://www.linkedin.com/in/evapisabaj"
     },
+    {
+        realName: "Kevin Palma",
+        specialty: "Volunteer",
+        status: "CAPTURED",
+        image: "teamPhotos/kevin.jpg",
+        threatLevel: 3
+    }
 ];
 
 
@@ -425,85 +422,6 @@ function applyRedBlueGlitch(card, e) {
     }
 }
 
-//table view layout with 4 columns and increased spacing
-// function loadTeamTable() {
-//     const teamContainer = document.getElementById("teamGrid");
-//     teamContainer.innerHTML = "";
-//     teamContainer.className = "team-table";
-
-//     //create table structure
-//     const table = document.createElement("table");
-//     let currentRow;
-    
-//     teamMembers.forEach((member, index) => {
-//         //create a new row for every 4 members
-//         if (index % 4 === 0) {
-//             currentRow = document.createElement("tr");
-//             table.appendChild(currentRow);
-//         }
-        
-//         const cell = document.createElement("td");
-//         cell.classList.add("team-member-cell");
-        
-//         const isLinked = !!member.linkedin;
-//         const memberCard = document.createElement(isLinked ? "a" : "div");
-//         memberCard.classList.add("team-member");
-
-//         if (isLinked) {
-//             memberCard.href = member.linkedin;
-//             memberCard.target = "_blank";
-//             memberCard.rel = "noopener noreferrer";
-//         }
-        
-//         if (member.status === "CAPTURED") {
-//             memberCard.classList.add("captured");
-//         }
-        
-//         let threatFlames = "🔥".repeat(member.threatLevel || 3);
-        
-//         memberCard.innerHTML = `
-//             <div class="status ${member.status === "CAPTURED" ? "captured" : ""}">${member.status}</div>
-//             <img src="${member.image}" alt="${member.realName}">
-//             <div class="hacker-info">
-//                 <div class="glitch-data real-name">${member.realName}</div>
-//                 <div class="glitch-data specialty">${member.specialty}</div>
-//                 <div class="threat-level">${threatFlames}</div>
-//             </div>
-//         `;
-        
-//         memberCard.addEventListener("mousemove", function(e) {
-//             applyRedBlueGlitch(this, e);
-//         });
-        
-//         //effect on click
-//         memberCard.addEventListener("click", function() {
-//             this.style.filter = "invert(100%)";
-//             setTimeout(() => {
-//                 this.style.filter = "invert(0%)";
-//             }, 150);
-//         });
-        
-//         //Reset mouse
-//         memberCard.addEventListener("mouseleave", function() {
-//             this.style.textShadow = '';
-//             this.style.boxShadow = '';
-//             const textElements = this.querySelectorAll('.glitch-data');
-//             textElements.forEach(element => {
-//                 element.style.textShadow = '';
-//                 element.style.transform = 'translate(0, 0)';
-//                 //Reset text
-//                 if (element.dataset.originalText) {
-//                     element.textContent = element.dataset.originalText;
-//                 }
-//             });
-//         });
-        
-//         cell.appendChild(memberCard);
-//         currentRow.appendChild(cell);
-//     });
-    
-//     teamContainer.appendChild(table);
-// }
 
 function loadTeamTable() {
     const teamContainer = document.getElementById("teamGrid");
