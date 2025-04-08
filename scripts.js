@@ -285,7 +285,7 @@ const teamMembers = [
     },
     {
         realName: "Eduardo Morales",
-        specialty: "Experience Member | Web Development member",
+        specialty: "Experience Member | Web Design Member",
         status: "CAPTURED",
         image: "teamPhotos/eddie.JPG",
         threatLevel: 4
