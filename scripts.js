@@ -221,7 +221,7 @@ function startRandomGlitchLoop(canvas, ctx, imagePair) {
         setTimeout(glitchWithRandomDelay, randomDelay);
     }
 
-    glitchWithRandomDelay(); // Start immediately
+    setTimeout(glitchWithRandomDelay, Math.random() * 3000 + 100); // Delay each loop's start slightly
 }
 
 // run glitches on all elements with random timing
