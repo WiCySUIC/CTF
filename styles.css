@@ -412,6 +412,7 @@ SCHEDULE SECTION PUT STUFF HERE
     transform: rotate(-45deg);
     transition: transform 0.3s ease;
     margin-left: 10px;
+    flex-shrink: 0;
 }
 
 .schedule-item.active .caret {
