@@ -344,13 +344,6 @@ const teamMembers = [
         image: "teamPhotos/eva.JPG",
         threatLevel: 3,
         linkedin: "https://www.linkedin.com/in/evapisabaj"
-    },
-    {
-        realName: "Kevin Palma",
-        specialty: "Volunteer",
-        status: "CAPTURED",
-        image: "teamPhotos/kevin.jpg",
-        threatLevel: 3
     }
 ];
 
