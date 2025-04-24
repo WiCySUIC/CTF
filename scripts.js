@@ -416,6 +416,7 @@ function applyRedBlueGlitch(card, e) {
 }
 
 
+
 function loadTeamTable() {
     const teamContainer = document.getElementById("teamGrid");
     teamContainer.innerHTML = "";
