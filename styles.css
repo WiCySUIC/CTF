@@ -1307,6 +1307,8 @@ a.team-member {
     font-family: 'KodeMono';
     text-shadow: 0 0 5px #2196f3;
     transition: transform 0.2s ease;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .experience-image {
